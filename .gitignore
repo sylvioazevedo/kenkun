@@ -10,3 +10,6 @@ wheels/
 .venv
 
 src/etc/settings.py
+
+.sesskey
+uv.lock
