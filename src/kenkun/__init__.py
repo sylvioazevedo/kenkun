@@ -41,29 +41,56 @@ def main():
         # check if appname already exists
         if os.path.exists(appname):
             print(f"App {appname} already exists")
-            exit(1)
+        else:
+            print(f"Creating app {appname} with skeleton {skeleton}")
 
-        print(f"Creating app {appname} with skeleton {skeleton}")
+            # assemble github url from selected sekleton
+            url = f'{GITHUB_URL}/{skeleton}.git'
 
-        # assemble github url from selected sekleton
-        url = f'{GITHUB_URL}/{skeleton}.git'
+            print('Cloning skeleton from github...')
+            print(f'URL: {url}')
 
-        print('Cloning skeleton from github...')
-        print(f'URL: {url}')
+            # clone locally the skeleton from a git repository
+            proc = subprocess.Popen(['git', 'clone', f"{url}", f'{appname}'], stdout=subprocess.PIPE)
+            out, err = proc.communicate()
 
-        # clone locally the skeleton from a git repository
-        proc = subprocess.Popen(['git', 'clone', f"{url}", f'{appname}'], stdout=subprocess.PIPE)
-        out, err = proc.communicate()
+            print(out)
+            print(err)
 
-        print(out)
-        print(err)
+        # Find replace |APPNAME| with appname in all files in view folder
+        print("Find replace |APPNAME| with appname in all files in view folder")
+        for root, dirs, files in os.walk(f'{appname}/view'):
+            for file in files:                
+                filepath = os.path.join(root, file)
+                print(filepath)
+
+                try:
+                    with open(filepath) as f:
+                        s = f.read()
+                    s = s.replace('|-APPNAME-|', appname)
+                    with open(filepath, "w") as f:
+                        f.write(s)
+                except Exception as e:
+                    print(e)
+                    continue
 
     elif action == 'generate':
         print("Generating app...")
+
     elif action == 'run':
         print("Running app...") 
+        # set path to appname folder
+        os.chdir(appname)
+        cmd = f'uv run app.py'
+        print(cmd)
+        # excute the command
+        os.system(cmd)
+        exit(0)
+
     elif action == 'test':
+
         print("Testing app...")
+
     elif action == 'delete':
 
         def handle_remove_readonly(func, path, exc):
