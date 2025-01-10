@@ -13,3 +13,5 @@ src/etc/settings.py
 
 .sesskey
 uv.lock
+
+*.cfg
