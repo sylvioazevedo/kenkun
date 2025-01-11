@@ -1,12 +1,13 @@
 # Kenkun Project
 
 ## Overview
-Welcome to the Kenkun Project! This project aims to [provide a brief description of what your project does].
+Welcome to the Kenkun Project! This project aims to be a scaffolding tool for python web projects. 
+It is designed to help developers quickly create new projects with a predefined structure and configuration.
+The project is currently in development and is not yet ready for production use.
 
 ## Features
-- Feature 1: Create 
-- Feature 2: [Description of feature 2]
-- Feature 3: [Description of feature 3]
+- Feature 1: Create diferent types of web applications, such as Flask, FastHTML and FastHTML standalone.
+- Feature 2: Model driven development, with automatic generation of models, views and controllers.
 
 ## Installation
 To install the necessary dependencies, run the following command:
@@ -17,8 +18,19 @@ pip install kenkun
 ## Usage
 To start the project, use the following command:
 ```bash
-kenkun create [project-name]
+kk create -a [project-name]
 ```
+
+To generate a new model, use the following command:
+```bash
+kk domain -d [model-name]
+```
+
+To generate all: views, controllers and models, use the following command:
+```bash
+kk all -d [model-name]
+```
+
 For detailed usage instructions, refer to the [documentation](https://github.com/sylvioazevedo/kenkun/wiki).
 
 ## Contributing
@@ -28,4 +40,4 @@ We welcome contributions! Please see our [contributing guidelines](https://githu
 This project is licensed under the [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
 ## Contact
-For any questions or feedback, please contact [your email or contact information].
+For any questions or feedback, please contact <sylvioazevedo@gmail.com>.
