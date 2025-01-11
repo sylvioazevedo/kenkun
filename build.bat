@@ -1,4 +1,7 @@
 @echo off
+rem delete dist directory
+call rmdir /S /Q dist
+
 call uv run -m build
 
 rem copy dist files to deploy directory

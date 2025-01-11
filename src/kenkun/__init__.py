@@ -230,8 +230,8 @@ def main():
         else:
             print(f"Creating app {appname} with skeleton {skeleton}")
 
-            # remove internal project files [.gitignore, .python-version, README.md, pyproject.toml]
-            for file in ['.gitignore', '.python-version', 'README.md', 'pyproject.toml']:
+            # remove internal project files [.gitignore, .python-version, README.md, pyproject.toml, uv.lock]
+            for file in ['.gitignore', '.python-version', 'README.md', 'pyproject.toml', 'uv.lock']:
                 try:
                     os.remove(file)
                 except FileNotFoundError:

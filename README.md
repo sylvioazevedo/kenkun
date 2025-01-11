@@ -15,6 +15,14 @@ To install the necessary dependencies, run the following command:
 pip install kenkun
 ```
 
+Once installed. Create a configuration file in the root of your project with the following content, inserting your Github access properties:
+```python
+# Github access properties
+GITHUB_USER=''
+GITHUB_TOKEN=''
+GITHUB_URL=f''
+```
+
 ## Usage
 To start the project, use the following command:
 ```bash
