@@ -11,6 +11,10 @@ import os
 import shutil
 import stat
 import subprocess
+import sys
+
+# set python path as current directory
+sys.path.append(os.path.abspath(os.getcwd()))
 
 # load configurations from file
 with open('kenkun.cfg') as f:
@@ -182,10 +186,10 @@ def main():
     parser = argparse.ArgumentParser(description='Kenkun webapp generator')
 
     parser.add_argument('action', metavar='<action>', nargs="?", type=str, help=", ".join(ACTION_CHOICES), choices=ACTION_CHOICES)
-    parser.add_argument('appname', type=str, help='The application name')
+    parser.add_argument('-a', '--appname', type=str, help='The application name')
 
     parser.add_argument('-v', '--version', action='version', version='%(prog)s 1.0')    
-    parser.add_argument('-s', '--skeleton', type=str, help='The skeleton to generate', default='fh-vuexy')
+    parser.add_argument('-s', '--skeleton', type=str, help='The skeleton to generate', default='fh-vuexy-sa')
 
     parser.add_argument('-d', '--domain', type=str, help='The domain reference to generate the artifacts')
 
@@ -201,6 +205,9 @@ def main():
     print(f"Appname: {appname}")
     print(f"Skeleton: {skeleton}")
     print(f"Domain: {domain}")
+
+    # set python path as current directory
+    os.environ['PYTHONPATH'] = os.getcwd()
 
     # show python path
     print(f"Python path: {os.path.dirname(os.path.realpath(__file__))}")
@@ -223,6 +230,13 @@ def main():
         else:
             print(f"Creating app {appname} with skeleton {skeleton}")
 
+            # remove internal project files [.gitignore, .python-version, README.md, pyproject.toml]
+            for file in ['.gitignore', '.python-version', 'README.md', 'pyproject.toml']:
+                try:
+                    os.remove(file)
+                except FileNotFoundError:
+                    pass            
+
             # assemble github url from selected sekleton
             url = f'{GITHUB_URL}/{skeleton}.git'
 
@@ -230,7 +244,20 @@ def main():
             print(f'URL: {url}')
 
             # clone locally the skeleton from a git repository
-            proc = subprocess.Popen(['git', 'clone', f"{url}", f'{appname}'], stdout=subprocess.PIPE)
+            proc = subprocess.Popen(['git', 'remote', 'add', 'origin', f"{url}"], stdout=subprocess.PIPE)            
+            out, err = proc.communicate()
+
+            print(out)
+            print(err)
+            
+            proc = subprocess.Popen(['git', 'fetch'], stdout=subprocess.PIPE)            
+            out, err = proc.communicate()
+
+            print(out)
+            print(err)
+
+            # clone locally the skeleton from a git repository
+            proc = subprocess.Popen(['git', 'checkout', '-t', 'origin/master'], stdout=subprocess.PIPE)
             out, err = proc.communicate()
 
             print(out)

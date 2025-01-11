@@ -4,8 +4,8 @@ version = "0.1.2"
 description = "A cli ui to generate projects in python."
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = [    
-    "jinja2",    
+dependencies = [        
+    "jinja2"
 ]
 
 [build-system]

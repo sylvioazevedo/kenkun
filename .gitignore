@@ -14,4 +14,4 @@ src/etc/settings.py
 .sesskey
 uv.lock
 
-*.cfg
+base-kenkun.cfg
